@@ -4,7 +4,7 @@ import * as ReactDOM from 'react-dom';
 import { PageContext } from '@microsoft/sp-page-context';
 import {MSGraphClientFactory, SPHttpClient} from "@microsoft/sp-http";
 import { initializeFileTypeIcons, getFileTypeIconProps } from '@uifabric/file-type-icons';
-import { Icon, CommandBarButton, IconButton, TooltipHost } from 'office-ui-fabric-react';
+import { Icon, CommandBarButton, IconButton, TooltipHost, MessageBar, MessageBarType, MessageBarButton } from 'office-ui-fabric-react';
 import { followDocument, unFollowDocument, getFollowed, isUserManage, deleteForm } from './Services/Requests';
 import ListControls from './components/ListControls/ListControls';
 import styles from './customComponent.module.scss';
@@ -253,15 +253,20 @@ export function CustomComponent (props: ICustomComponentProps){
             </ul> */}
 
             {isUserManage(props.pageContext) &&
-                <ListControls 
-                    iFrameVisible = {iFrameVisible}
-                    setIFrameVisible = {setIFrameVisible}
-                    iFrameUrl = {iFrameUrl}
-                    addLinkHandler={addLinkHandler}
-                    uploadDocumentHandler={uploadDocumentHandler}
-                    toggleEditControls={toggleEditControls}
-                    viewAllHandler={viewAllHandler}    
-                />
+                <>
+                    <ListControls 
+                        iFrameVisible = {iFrameVisible}
+                        setIFrameVisible = {setIFrameVisible}
+                        iFrameUrl = {iFrameUrl}
+                        addLinkHandler={addLinkHandler}
+                        uploadDocumentHandler={uploadDocumentHandler}
+                        toggleEditControls={toggleEditControls}
+                        viewAllHandler={viewAllHandler}    
+                    />
+                    <MessageBar isMultiline={true} messageBarType={MessageBarType.warning}>
+                        Please allow few minutes to see the updates if you have done operations like upload, edit, add or delete on the list items. You can manually refresh the page to see the changes.
+                    </MessageBar>
+                </>
             }
         </>
     );
